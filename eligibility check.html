@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <title>Eligibility Result</title>
+
+  <style>
+
+    body { font-family: sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+
+    h2 { text-align: center; }
+
+    .status { font-weight: bold; padding: 5px 0; }
+
+    .active { color: green; }
+
+    .inactive { color: red; }
+
+  </style>
+
+</head>
+
+<body>
+
+  <h2>Eligibility Confirmation</h2>
+
+  <p><strong>Member ID:</strong> <span id="member_id"></span></p>
+
+  <ul>
+
+    <li><span class="status" id="medical"></span> Medical</li>
+
+    <li><span class="status" id="dental"></span> Dental</li>
+
+    <li><span class="status" id="drug"></span> Drug</li>
+
+    <li><span class="status" id="vision"></span> Vision</li>
+
+  </ul>
+
+  <p><strong>Plan Name:</strong> <span id="plan"></span></p>
+
+
+
+  <script>
+
+    const params = new URLSearchParams(window.location.search);
+
+
+
+    const getStatus = (val) => val === 'T' ? '✔ Active' : '✘ Inactive';
+
+    const getClass = (val) => val === 'T' ? 'active' : 'inactive';
+
+
+
+    document.getElementById('member_id').textContent = params.get('member_id') || 'N/A';
+
+
+
+    ['medical', 'dental', 'drug', 'vision'].forEach(type => {
+
+      const value = params.get(type);
+
+      const el = document.getElementById(type);
+
+      el.textContent = getStatus(value);
+
+      el.className = `status ${getClass(value)}`;
+
+    });
+
+
+
+    document.getElementById('plan').textContent = params.get('plan') || 'N/A';
+
+  </script>
+
+</body>
+
+</html>
